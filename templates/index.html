@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Enhancer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-5">Image Enhancer</h1>
+        <form class="mb-5" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Upload Image:</label>
+                <input type="file" class="form-control-file" name="image" id="image-input" onchange="previewImage();" accept=".jpg,.jpeg,.png">
+            </div>
+            <input type="submit" class="btn btn-primary my-2" value="Enhance">
+        </form>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3">Original Image:</h3>
+                <div id="original"></div>
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3">Enhanced Image:</h3>
+                <div id="enhanced"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function previewImage() {
+            var original = document.getElementById('original');
+            var file = document.getElementById("image-input").files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                var img = document.createElement('img');
+                img.src = reader.result;
+                img.classList.add('img-fluid');
+
+                // Get the dimensions of the image
+                var realWidth = img.naturalWidth;
+                var realHeight = img.naturalHeight;
+
+                img.width = realWidth * 4;
+                console.log(realWidth * 4)
+                img.height = realHeight * 4;
+
+                original.appendChild(img);
+            };
+            reader.readAsDataURL(file); // read the file as a data URL
+        }
+        var form = document.querySelector('form');
+        var enhanced = document.getElementById('enhanced');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var file = document.querySelector('input[type=file]').files[0];
+            var formData = new FormData();
+            formData.append('image', file);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(response) {
+                return response.arrayBuffer();
+            })
+            .then(function(buffer) {
+                var blob = new Blob([buffer], {type: 'image/jpeg'});
+                var url = URL.createObjectURL(blob);
+                var img = document.createElement('img');
+                img.src = url;
+                img.classList.add('img-fluid');
+                enhanced.appendChild(img);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Flask==2.1.0
+Pillow==8.4.0
+numpy==1.19.5
+tensorflow==2.6.0
+keras==2.6.0
+protobuf==3.20.*
+opencv_python
+tensorflow_hub
