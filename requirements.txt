@@ -1,5 +1,5 @@
 Flask==2.3.2
-Pillow==10.0.1
+Pillow==10.3.0
 numpy==1.22.0
 tensorflow==2.11.1
 keras==2.6.0
