@@ -21,7 +21,7 @@ To run this application on your local machine, please follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/g4m3r0/imageupscaler.git](https://github.com/g4m3r0/imageupscaler.git)
+    git clone https://github.com/g4m3r0/imageupscaler.git
     cd imageupscaler
     ```
 
